@@ -23,16 +23,11 @@ function Main(props) {
     React.useEffect(()=>{
         api.getInitialCards()
         .then((userCards)=>{
-            setCards(userCards.map((item => ({
-                id: item._id,
-                link: item.link,
-                name: item.name,
-                like: item.likes.length,
-                onCardClick: props.handleCardClick
-            }))));
+            console.log(userCards);
+            setCards(userCards)
         })
         .catch((err) => console.log(err));
-    }, [props.handleCardClick]);
+    }, []);
 
     return(
         <main className="content">
@@ -52,11 +47,22 @@ function Main(props) {
         </section>
         <section className = "gridImages">
             <ul className="elements">
-                {cards.map(({id, ...props}) => <Card key={id} {...props}/>)}
+                {cards.map((card) => <Card  key={card._id} 
+                            {...card}
+                            onCardClick={(linkCard) => props.handleCardClick(linkCard)} />)}
             </ul>
         </section>
     </main>
     );
 }
+
+
+// id: item._id,
+// link: item.link,
+// name: item.name,
+// like: item.likes.length,
+// onCardClick: props.handleCardClick
+
+
 
 export default Main;

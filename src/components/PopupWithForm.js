@@ -8,7 +8,7 @@ function PopupWithForm(props){
             <h2 className="modal__title">{props.title}</h2>
             <form className="modal__edit-form" name={props.name} novalidate>
                 {props.children}
-                <button id={props.idButton} className="modal__save-button">Сохранить</button>
+                <button id={props.idButton} className="modal__save-button">{props.buttonText}</button>
             </form>
         </div>
     </div>
