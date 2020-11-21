@@ -6,9 +6,9 @@ function PopupWithForm(props){
         <div className="modal__container">
             <button className="modal__close-button" onClick={props.onClose}></button>
             <h2 className="modal__title">{props.title}</h2>
-            <form className="modal__edit-form" name={props.name} novalidate>
+            <form className="modal__edit-form" name={props.name}>
                 {props.children}
-                <button id={props.idButton} className="modal__save-button">{props.buttonText}</button>
+                <button id={props.idButton} className="modal__save-button" onSubmit={props.onSubmit}>{props.buttonText}</button>
             </form>
         </div>
     </div>
