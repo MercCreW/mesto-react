@@ -21,7 +21,7 @@ function App() {
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [cards, setCards] = React.useState([]);
 
-    const [currentUser, setCurrentUser] = React.useState('');
+    const [currentUser, setCurrentUser] = React.useState({name:'', about:'', avatar:''});
     
     const handleEditAvatarClick = () => {
         setIsEditAvatarPopupOpen(true);
@@ -48,8 +48,8 @@ function App() {
 
     function handleUpdateAvatar(link){
         api.patchNewAvatar(link)
-        .then((res)=>{
-            setCurrentUser(res);
+        .then((link)=>{
+            setCurrentUser(link);
             closeAllPopups();
         })
         .catch((error) => console.log(error));
@@ -76,7 +76,7 @@ function App() {
       }
 
 
-      function handleDeleteCard(card){
+    function handleDeleteCard(card){
         api.deleteCard(card._id)
         .then(()=>{
             const newCards = cards.filter((currentCard)=> currentCard._id !== card._id);
@@ -115,10 +115,6 @@ return (
                 handleCardClick={handleCardClick}
                 onCardLike={handleCardLike}
                 onCardDelete={handleDeleteCard}
-
-                isEditProfilePopupOpen={isEditProfilePopupOpen}
-                isAddPlacePopupOpen={isAddPlacePopupOpen}
-                isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                 
                 cards={cards}
                 setCards={setCards}

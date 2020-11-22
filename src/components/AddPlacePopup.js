@@ -25,7 +25,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
         onClose={onClose}
         buttonText='Добавить'
     >
-        {/* <input
+        <input
             type="text"
             name="input-tittle"
             ref={refCardName}
@@ -42,7 +42,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
             className="modal__input modal__input_type_link"
             placeholder="Ссылка на картинку"
             required />
-        <span className="modal__error" id="input-link-error"></span> */}
+        <span className="modal__error" id="input-link-error"></span>
     </PopupWithForm>
     )
 }

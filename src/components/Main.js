@@ -13,7 +13,7 @@ function Main({cards, onEditAvatar,onEditProfile, onAddPlace, onCardLike, onCard
         <section className="profile">
             <div className ="profile__card">
                 <img className="profile__avatar" src={currentUser.avatar} alt="Исследователь океана Жак Ив Кусто" />
-                <img onClick={onEditAvatar } className="profile__avatar-edit-button" src={editButton} alt="Кнопка редактирования фотографии профиля" />
+                <img onClick={onEditAvatar} className="profile__avatar-edit-button" src={editButton} alt="Кнопка редактирования фотографии профиля" />
                 <div className="profile__info">
                     <div className="profile__title-button">
                         <h1 className="profile__info-title">{currentUser.name}</h1>

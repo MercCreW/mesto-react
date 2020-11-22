@@ -30,6 +30,7 @@ class Api{
     }
 
     setUserInfo(userInfo) {
+        console.log(userInfo)
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this.headers,
@@ -82,9 +83,7 @@ class Api{
         return fetch(`${this._baseUrl}/users/me/avatar`, {
                 method: 'PATCH',
                 headers: this._headers,
-                body: JSON.stringify({
-                    avatar: link
-                })
+                body: JSON.stringify(link)
         })
             .then(this._checkStatus);
     }

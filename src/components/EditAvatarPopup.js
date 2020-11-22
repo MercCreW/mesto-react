@@ -22,7 +22,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}){
         onClose={onClose} 
         buttonText='Сохранить'
         >
-            {/* <input
+            <input
                 type="url"
                 name= "input-avatar"
                 ref={refAvatar}
@@ -30,7 +30,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}){
                 placeholder="Ссылка на картинку"
                 required 
             />
-            <span className="modal__error" id="input-avatar-error"></span> */}
+            <span className="modal__error" id="input-avatar-error"></span>
             </PopupWithForm>
     );
 }

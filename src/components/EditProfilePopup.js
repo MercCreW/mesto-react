@@ -5,8 +5,7 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext';
 function EditProfilePopup({isOpen, onClose, onUpdateUser}){
     const currentUser = React.useContext(CurrentUserContext);
     const [name, setName] = React.useState(currentUser.name);
-    const [description, setDescription] = React.useState(currentUser.about);
-    
+    const [description, setDescription] = React.useState(currentUser.about); 
 
     React.useEffect(() => {
         setName(currentUser.name);
