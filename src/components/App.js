@@ -48,8 +48,8 @@ function App() {
 
     function handleUpdateAvatar(link){
         api.patchNewAvatar(link)
-        .then((link)=>{
-            setCurrentUser(link);
+        .then((res)=>{
+            setCurrentUser(res);
             closeAllPopups();
         })
         .catch((error) => console.log(error));
@@ -63,7 +63,7 @@ function App() {
           });
       }
 
-    const handleCardLike = (card) => {
+    function handleCardLike(card){
         console.log(card);
         const isLiked = card.likes.some(i => i._id === currentUser._id);
         api.addLikeDislikeCard(card._id, !isLiked)
@@ -76,7 +76,7 @@ function App() {
       }
 
 
-    const handleDeleteCard = (card) =>{
+      function handleDeleteCard(card){
         api.deleteCard(card._id)
         .then(()=>{
             const newCards = cards.filter((currentCard)=> currentCard._id !== card._id);

@@ -30,8 +30,8 @@ function Main({cards, onEditAvatar,onEditProfile, onAddPlace, onCardLike, onCard
                     (<Card  key={card._id} 
                             {...card}
                             onCardClick={handleCardClick} 
-                            onCardLike={onCardLike}
-                            onCardDelete={onCardDelete}                            
+                            onCardLike={(card) => onCardLike(card)}
+                            onCardDelete={(card) => onCardDelete(card)}                            
                             />))}
             </ul>
         </section>

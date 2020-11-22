@@ -2,10 +2,11 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import {CurrentUserContext} from '../contexts/CurrentUserContext';
 
-function EditProfilePopup(props){
-    const [name, setName] = React.useState('');
-    const [description, setDescription] = React.useState('');
+function EditProfilePopup({isOpen, onClose, onUpdateUser}){
     const currentUser = React.useContext(CurrentUserContext);
+    const [name, setName] = React.useState(currentUser.name);
+    const [description, setDescription] = React.useState(currentUser.about);
+    
 
     React.useEffect(() => {
         setName(currentUser.name);
@@ -13,35 +14,33 @@ function EditProfilePopup(props){
       }, [currentUser]);
 
     function handleChangeName(e) {
-        e.preventDefault();
         setName(e.target.value);
       }
 
     function handleChangeAbout(e) {
-        e.preventDefault();
         setDescription(e.target.value);
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.onUpdateUser({
+        onUpdateUser({
           name,
           about: description,
         });
       } 
-
-
     
     return(
         <PopupWithForm 
-        name='edit-form' 
-        title='Редактировать профиль' 
-        idButton='saveEditForm' 
-        isOpen={props.isOpen} 
-        onClose={props.onClose} 
-        buttonText='Сохранить'
+        nameForm={'edit-form'}
+        name={'newProfile'}
+        title={'Редактировать профиль' }
+        idButton={'saveEditForm' }
+        isOpen={isOpen} 
+        onClose={onClose} 
+        buttonText={'Сохранить'}
         onSubmit={handleSubmit}
-    >
+        children={(
+        <>
         <input 
             type="text"
             name="input-name"
@@ -62,7 +61,9 @@ function EditProfilePopup(props){
             minLength="2"
             maxLength="200" />
         <span className="modal__error" id="input-profession-error"></span>
-    </PopupWithForm>
+        </>
+        )}
+    />
     );
 }
 

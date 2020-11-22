@@ -2,14 +2,14 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
 
-function AddPlacePopup(props){
+function AddPlacePopup({isOpen, onClose, onAddPlace}){
     const refCardName = React.useRef();
     const refCardLink = React.useRef();
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        props.onAddPlace({ 
+        onAddPlace({ 
             name: refCardName.current.value,
             link: refCardLink.current.value
         });
@@ -21,11 +21,11 @@ function AddPlacePopup(props){
         title='Новое место' 
         idButton='saveButtonAddCard' 
         onSubmit={handleSubmit}
-        isOpen={props.isOpen} 
-        onClose={props.onClose}
+        isOpen={isOpen} 
+        onClose={onClose}
         buttonText='Добавить'
     >
-        <input
+        {/* <input
             type="text"
             name="input-tittle"
             ref={refCardName}
@@ -42,7 +42,7 @@ function AddPlacePopup(props){
             className="modal__input modal__input_type_link"
             placeholder="Ссылка на картинку"
             required />
-        <span className="modal__error" id="input-link-error"></span>
+        <span className="modal__error" id="input-link-error"></span> */}
     </PopupWithForm>
     )
 }
