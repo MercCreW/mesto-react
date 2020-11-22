@@ -23,6 +23,9 @@ function App() {
 
     const [currentUser, setCurrentUser] = React.useState({name:'', about:'', avatar:''});
     
+
+
+
     const handleEditAvatarClick = () => {
         setIsEditAvatarPopupOpen(true);
     };
@@ -37,13 +40,22 @@ function App() {
         setSelectedCard(card);
     }
 
+    React.useEffect(()=>{
+        Promise.all([api.getInitialCards(), api.getUserInfo()])  
+        .then(([cards, res]) => {
+            setCards(cards);
+            setCurrentUser(res);
+        })
+        .catch((err) => console.log(err));
+    },[]);
+
     function handleUpdateUser(data){
         api.setUserInfo(data)
         .then((res) => {
             setCurrentUser(res);
             closeAllPopups();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log('Ошибка при редактировании данных пользователя', error));
     }
 
     function handleUpdateAvatar(link){
@@ -64,7 +76,6 @@ function App() {
       }
 
     function handleCardLike(card){
-        console.log(card);
         const isLiked = card.likes.some(i => i._id === currentUser._id);
         api.addLikeDislikeCard(card._id, !isLiked)
           .then((newCard) => {
@@ -93,16 +104,6 @@ function App() {
     
         setSelectedCard(null);
     }
-
-    React.useEffect(()=>{
-        Promise.all([api.getInitialCards(), api.getUserInfo()])  
-        .then(([cards, res]) => {
-            setCards(cards);
-            setCurrentUser(res);
-        })
-        .catch((err) => console.log(err));
-    },[]);
-
 
 return (
     <CurrentUserContext.Provider value={currentUser} >

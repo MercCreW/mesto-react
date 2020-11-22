@@ -33,11 +33,8 @@ class Api{
         console.log(userInfo)
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: this.headers,
-            body: JSON.stringify({
-                name: userInfo.userName,
-                about: userInfo.userJob
-            })
+            headers: this._headers,
+            body: JSON.stringify(userInfo)
         }
         )
         .then(this._checkStatus)
