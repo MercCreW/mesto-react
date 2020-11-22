@@ -1,5 +1,3 @@
-import { inputLink } from "../utils/constants";
-
 class Api{
     constructor({baseUrl, headers}){
         this._baseUrl = baseUrl;
@@ -73,7 +71,6 @@ class Api{
     }
 
     addLikeDislikeCard(cardId, isLike) {
-        console.log(isLike);
         return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
             method:  isLike ? 'PUT' : 'DELETE',
             headers: this._headers

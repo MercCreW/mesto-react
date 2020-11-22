@@ -33,6 +33,10 @@ function App() {
         setIsAddPlacePopupOpen(true);
     };
 
+    const handleCardClick = (card) => {
+        setSelectedCard(card);
+    }
+
     function handleUpdateUser(data){
         api.setUserInfo(data)
         .then((res) => {
@@ -44,8 +48,8 @@ function App() {
 
     function handleUpdateAvatar(link){
         api.patchNewAvatar(link)
-        .then((res)=>{
-            setCurrentUser(res);
+        .then((link)=>{
+            setCurrentUser(link);
             closeAllPopups();
         })
         .catch((error) => console.log(error));
@@ -54,18 +58,15 @@ function App() {
     function handleAddPlaceSubmit(data){
         api.addNewCard(data)
           .then((newCard) => {
-            setCards([...cards, newCard]);
+            setCards([newCard, ...cards]);
             closeAllPopups();
           });
       }
 
-    const handleCardClick = (card) => {
-        setSelectedCard(card);
-    }
-
-    function handleCardLike(card) {
-        const isLiked = card.likes.some(i => i._id === setCurrentUser._id);
-        api.addLikeDislikeCard(card._id, isLiked)
+    const handleCardLike = (card) => {
+        console.log(card);
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        api.addLikeDislikeCard(card._id, !isLiked)
           .then((newCard) => {
               console.log(newCard)
             const newCards = cards.map((item) => item._id === card._id ? newCard : item);
@@ -73,6 +74,17 @@ function App() {
           })
           .catch((error) => console.log(error));
       }
+
+
+    const handleDeleteCard = (card) =>{
+        api.deleteCard(card._id)
+        .then(()=>{
+            const newCards = cards.filter((currentCard)=> currentCard._id !== card._id);
+            setCards(newCards);
+            closeAllPopups();
+        })
+        .catch((error) => console.log(error));
+    }
 
     const closeAllPopups = () =>{
         setIsEditAvatarPopupOpen(false);
@@ -83,12 +95,14 @@ function App() {
     }
 
     React.useEffect(()=>{
-        api.getUserInfo()  
-        .then((res) => {
+        Promise.all([api.getInitialCards(), api.getUserInfo()])  
+        .then(([cards, res]) => {
+            setCards(cards);
             setCurrentUser(res);
         })
         .catch((err) => console.log(err));
     },[]);
+
 
 return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -97,12 +111,17 @@ return (
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
                 onEditAvatar={handleEditAvatarClick}
+
                 handleCardClick={handleCardClick}
                 onCardLike={handleCardLike}
+                onCardDelete={handleDeleteCard}
+
                 isEditProfilePopupOpen={isEditProfilePopupOpen}
                 isAddPlacePopupOpen={isAddPlacePopupOpen}
                 isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-                selectedCard={selectedCard}
+                
+                cards={cards}
+                setCards={setCards}
                 onClose={closeAllPopups}
         />
         <Footer />
@@ -134,7 +153,8 @@ return (
 
     <ImagePopup 
         onClose={closeAllPopups}
-        card={selectedCard}/>   
+        selectedCard={selectedCard}
+    />   
     </CurrentUserContext.Provider>
   );
 }
